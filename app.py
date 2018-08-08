@@ -6,6 +6,7 @@ from flask.json import JSONEncoder
 from bson import json_util
 from mongoengine.base import BaseDocument
 from mongoengine.queryset.base import BaseQuerySet
+from flask_cors import CORS
 
 class MongoEngineJSONEncoder(JSONEncoder):
 
@@ -17,6 +18,7 @@ class MongoEngineJSONEncoder(JSONEncoder):
 
 app = Flask(__name__)
 app.json_encoder = MongoEngineJSONEncoder
+CORS(app)
 # uncomment the following line if you are targeting a local installation of mongo db
 # client = MongoClient("mongodb://127.0.0.1:27017")
 
@@ -37,6 +39,7 @@ def create_log():
             "msg" : msg,
             "error": str(e)
         })
+
 
 @app.route("/logs", methods=["GET"])
 def list_logs():
